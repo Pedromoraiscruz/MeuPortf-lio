@@ -1,15 +1,25 @@
-async function converter() { 
-    const valor = document.getElementById("valor").value;
-    const moedade = document.getElementById("de").value;
-    const moedapara = document.getElementById("para").value;
+async function converter() {
+    const valorInput = document.getElementById("valor");
+    const moedaDeInput = document.getElementById("de");
+    const moedaParaInput = document.getElementById("para");
     const resultado = document.getElementById("resultado");
 
-    if (valor === "" || isNaN(valor)) { 
-        resultado.textContent = "Por favor, insira um valor válido.";
+    // Verifica se os elementos existem
+    if (!valorInput || !moedaDeInput || !moedaParaInput || !resultado) {
+        console.error("Elementos HTML não encontrados.");
         return;
     }
 
-    if (moedade === moedapara) { 
+    const valor = parseFloat(valorInput.value);
+    const moedade = moedaDeInput.value;
+    const moedapara = moedaParaInput.value;
+
+    if (isNaN(valor) || valor <= 0) {
+        resultado.textContent = "Por favor, insira um valor numérico maior que zero.";
+        return;
+    }
+
+    if (moedade === moedapara) {
         resultado.textContent = "Escolha moedas diferentes para conversão.";
         return;
     }
@@ -19,11 +29,17 @@ async function converter() {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        const valorconvertido = data.result.toFixed(2);
-        resultado.textContent = `Resultado: ${valor} ${moedade} = ${valorconvertido} ${moedapara}`;
+
+        if (data.result === undefined) {
+            resultado.textContent = "Não foi possível obter o resultado da conversão.";
+            return;
+        }
+
+        const valorConvertido = parseFloat(data.result).toFixed(2);
+        resultado.textContent = `Resultado: ${valor} ${moedade} = ${valorConvertido} ${moedapara}`;
     } catch (error) {
-        console.error(error);
-        resultado.textContent = "Erro ao obter a taxa de câmbio.";
+        console.error("Erro ao acessar a API:", error);
+        resultado.textContent = "Erro ao obter a taxa de câmbio. Tente novamente mais tarde.";
     }
 }
 
