@@ -1,51 +1,37 @@
 async function converter() {
     const valorInput = document.getElementById("valor");
-    const moedaDeInput = document.getElementById("de");
-    const moedaParaInput = document.getElementById("para");
+    const moedaDe = document.getElementById("de");
+    const moedaPara = document.getElementById("para");
     const resultado = document.getElementById("resultado");
 
-  
-    if (!valorInput || !moedaDeInput || !moedaParaInput || !resultado) {
-        console.error("Elementos HTML não encontrados.");
-        return;
-    }
-
     const valor = parseFloat(valorInput.value);
-    const moedade = moedaDeInput.value;
-    const moedapara = moedaParaInput.value;
-
     if (isNaN(valor) || valor <= 0) {
-        resultado.textContent = "Por favor, insira um valor numérico maior que zero.";
+        resultado.textContent = "Por favor, insira um valor válido maior que zero.";
         return;
     }
 
-    if (moedade === moedapara) {
+    if (moedaDe.value === moedaPara.value) {
         resultado.textContent = "Escolha moedas diferentes para conversão.";
         return;
     }
 
-    const url = `https://api.exchangerate.host/convert?from=${moedade}&to=${moedapara}&amount=${valor}`;
+    const url = `https://api.exchangerate.host/convert?from=${moedaDe.value}&to=${moedaPara.value}&amount=${valor}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data.result === undefined) {
-            resultado.textContent = "Não foi possível obter o resultado da conversão.";
-            return;
-        }
+        console.log("Resposta da API:", data); // 👈 veja isso no console do navegador
 
-        const valorConvertido = parseFloat(data.result).toFixed(2);
-        resultado.textContent = `Resultado: ${valor} ${moedade} = ${valorConvertido} ${moedapara}`;
+        // Verifica se a resposta foi bem-sucedida e se existe o resultado
+        if (data && data.success && data.result !== undefined) {
+            const convertido = parseFloat(data.result).toFixed(2);
+            resultado.textContent = `Resultado: ${valor} ${moedaDe.value} = ${convertido} ${moedaPara.value}`;
+        } else {
+            resultado.textContent = "Não foi possível obter o resultado da conversão.";
+        }
     } catch (error) {
-        console.error("Erro ao acessar a API:", error);
-        resultado.textContent = "Erro ao obter a taxa de câmbio. Tente novamente mais tarde.";
+        console.error("Erro ao buscar dados:", error);
+        resultado.textContent = "Erro ao obter a taxa de câmbio.";
     }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const botao = document.querySelector("button");
-    if (botao) {
-        botao.addEventListener("click", converter);
-    }
-});
