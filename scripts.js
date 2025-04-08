@@ -1,37 +1,31 @@
 async function converter() {
     const valorInput = document.getElementById("valor");
-    const moedaDe = document.getElementById("de");
-    const moedaPara = document.getElementById("para");
+    const moedaDe = document.getElementById("de").value;
+    const moedaPara = document.getElementById("para").value;
     const resultado = document.getElementById("resultado");
 
     const valor = parseFloat(valorInput.value);
+
     if (isNaN(valor) || valor <= 0) {
-        resultado.textContent = "Por favor, insira um valor válido maior que zero.";
+        resultado.textContent = "Digite um valor válido.";
         return;
     }
 
-    if (moedaDe.value === moedaPara.value) {
-        resultado.textContent = "Escolha moedas diferentes para conversão.";
+    if (moedaDe === moedaPara) {
+        resultado.textContent = "Escolha moedas diferentes.";
         return;
     }
 
-    const url = `https://api.exchangerate.host/convert?from=${moedaDe.value}&to=${moedaPara.value}&amount=${valor}`;
+    const url = `https://api.frankfurter.app/latest?amount=${valor}&from=${moedaDe}&to=${moedaPara}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log("Resposta da API:", data); // 👈 veja isso no console do navegador
-
-        // Verifica se a resposta foi bem-sucedida e se existe o resultado
-        if (data && data.success && data.result !== undefined) {
-            const convertido = parseFloat(data.result).toFixed(2);
-            resultado.textContent = `Resultado: ${valor} ${moedaDe.value} = ${convertido} ${moedaPara.value}`;
-        } else {
-            resultado.textContent = "Não foi possível obter o resultado da conversão.";
-        }
+        const convertido = data.rates[moedaPara].toFixed(2);
+        resultado.textContent = `Resultado: ${valor} ${moedaDe} = ${convertido} ${moedaPara}`;
     } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-        resultado.textContent = "Erro ao obter a taxa de câmbio.";
+        console.error("Erro:", error);
+        resultado.textContent = "Não foi possível obter os dados da conversão.";
     }
 }
