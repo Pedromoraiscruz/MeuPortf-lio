@@ -1,0 +1,152 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+header {
+    background: #121212;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-top: 15px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: #f4b400;
+    color: #000000;
+}
+
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.projeto {
+    background: #1e1e1e;
+    padding: 30px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(244, 180, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projeto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(244, 180, 0, 0.4);
+}
+
+.projeto img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.projeto img:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    border-top: 1px solid #222;
+} 
+
+@media (max-width: 768px) {
+    nav ul {
+        gap: 15px;
+    }
+    .projeto {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 30px 10px;
+    }
+    section {
+        padding: 40px 10px;
+    }
+}
+.container {
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    max-width: 400px;
+    margin: auto;
+}
+
+h1 {
+    color: #f4b400;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+input, select {
+    background: #333;
+    color: white;
+}
+
+button {
+    background: #f4b400;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #d69600;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f4b400;
+}
+
