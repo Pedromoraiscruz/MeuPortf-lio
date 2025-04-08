@@ -4,7 +4,7 @@ async function converter() {
     const moedaParaInput = document.getElementById("para");
     const resultado = document.getElementById("resultado");
 
-    // Verifica se os elementos existem
+  
     if (!valorInput || !moedaDeInput || !moedaParaInput || !resultado) {
         console.error("Elementos HTML não encontrados.");
         return;
